@@ -2,7 +2,6 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("maven-publish")
-    id("signing")
 }
 
 android {
@@ -50,7 +49,7 @@ android {
 
 dependencies {
     compileOnly("androidx.annotation:annotation:1.5.0")
-    compileOnly("io.github.libxposed:api:100")
+    compileOnly(files("../libxposed/api/api/build/outputs/aar/api-release.aar"))
     implementation(project(":helper"))
 }
 
@@ -103,11 +102,3 @@ publishing {
     }
 }
 
-signing {
-    val signingKey = findProperty("signingKey") as String?
-    val signingPassword = findProperty("signingPassword") as String?
-    if (signingKey != null && signingPassword != null) {
-        useInMemoryPgpKeys(signingKey, signingPassword)
-    }
-    sign(publishing.publications)
-}
